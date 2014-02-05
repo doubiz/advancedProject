@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<!DOCTYPE vxml PUBLIC "vxml" "http://www.w3.org/TR/voicexml20/vxml.dtd">
+ 
+<vxml version="2.0">
+  <!-- A function in JavaScript -->
+  <script>
+  function price(size,toppings)
+  {
+    var res = 20;
+    if ('big' == size) res += 5;
+    if ('regular' == size) res += 3;
+    if ('cheese' == toppings) res += 1;
+    if ('mushrooms' == toppings) res += 2;
+    if ('chicken supreme' == toppings) res += 4;
+    if ('meat bbq' == toppings) res += 5;
+    if ('chicken' == toppings) res += 4;
+    return res;
+  }
+  </script>
+  <!-- -->
+
+  <form id="form1">
+	<!-- A block for an initial greeting -->
+    <block>
+      Welcome to your pizza ordering service!
+    </block>    
+	<!-- -->
+
+	<!-- The external form-level grammar -->
+    <grammar src="grammar.grxml"/>		
+	<!-- -->
+
+    <!-- The field for storing the size information -->
+    <field name="size">
+      <prompt>What size would you like?</prompt>
+      <grammar root="ROOT" type="application/srgs+xml">
+        <rule id="ROOT">
+          <one-of>
+            <item>big <tag> $='big'; </tag></item>
+            <item>regular <tag> $='regular'; </tag></item>
+          </one-of>
+        </rule>
+      </grammar>
+      <filled namelist="size"><prompt>Ok.</prompt> </filled>
+    </field>
+	<!-- -->
+
+	<!-- The field for storing the size confirmation information -->
+    <field name="confirm_size" cond="size != undefined">
+      <prompt>So you want a <value expr="size"/> pizza?</prompt>
+      <grammar root="ROOT" type="application/srgs+xml">
+        <rule id="ROOT">
+          <one-of>
+            <item>yes <tag> $=true; </tag></item>
+            <item>no <tag> $=false; </tag></item>
+          </one-of>
+        </rule>
+      </grammar>
+      <filled namelist="confirm_size">
+        <prompt>Ok.</prompt> 
+      </filled>
+    </field>
+    <!-- -->
+
+	<!-- The field for storing the toppings information -->
+    <field name="toppings">
+      <prompt>What toppings would you like?</prompt>
+      <grammar root="ROOT" type="application/srgs+xml">
+        <rule id="ROOT">
+          <one-of>
+            <item>cheese <tag> $='cheese'; </tag></item>
+            <item>mushrooms <tag> $='mushrooms'; </tag></item>
+          </one-of>
+        </rule>
+      </grammar>
+    </field>
+	<!-- -->
+
+	<!-- The field for storing the size confirmation information -->
+    <field name="confirm_toppings" cond="toppings != undefined">
+      <prompt>So you want a <value expr="toppings"/> topping?</prompt>
+      <grammar root="ROOT" type="application/srgs+xml">
+        <rule id="ROOT">
+          <one-of>
+            <item>yes <tag> $=true; </tag></item>
+            <item>no <tag> $=false; </tag></item>
+          </one-of>
+        </rule>
+      </grammar>
+      <filled namelist="confirm_toppings">
+<prompt>Ok.</prompt> 
+      </filled>
+    </field>
+    <!-- -->
+
+	<!-- The field for storing the toppings information -->
+    <field name="thickness">
+      <prompt>What thickness would you like?</prompt>
+      <grammar root="ROOT" type="application/srgs+xml">
+        <rule id="ROOT">
+          <one-of>
+            <item>ban <tag> $='ban'; </tag></item>
+            <item>thin <tag> $='thin'; </tag></item>
+          </one-of>
+        </rule>
+      </grammar>
+    </field>
+	<!-- -->
+
+
+	<!-- A block for generating a summary and termination of the dialogue -->
+    <block>Fine. Your total is <value expr="price(size,toppings)"/> pounds. Your order will be ready shortly.</block>
+	<!-- -->
+  </form>
+</vxml>

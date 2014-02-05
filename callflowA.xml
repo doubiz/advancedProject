@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<vxml version="2.1" xmlns="http://www.w3.org/2001/vxml" xmlns:voxeo="http://community.voxeo.com/xmlns/vxml">
+
+<meta name="maintainer" content="YOUREMAILADDRESS@HERE.com"/>
+
+
+<link next="#MainMenu">
+
+  <!-- The XML grammar for the main menu. -->
+  <grammar xml:lang="en-US" root ="LINKGRAM">
+     <rule id="LINKGRAM" scope="public">
+      <one-of>
+       <item>main</item>
+       <item>back</item>
+       <item>begin</item>
+      </one-of>
+     
+     </rule>
+    </grammar> 
+</link>
+
+  <form id="MainMenu">
+    <block>
+      <prompt bargein="false">
+        This is the Hello World Main Menu.
+      </prompt>
+    </block>
+
+    <field name="MeatOrPlant">
+      <prompt>
+        Are you a "Carnivore" or "Vegetarian".
+      </prompt>
+
+      <!-- Grammar for available responses for either "Carnivore" or "Vegetarian".-->
+      <grammar xml:lang="en-US" root = "MEATPLANT">
+        <rule id="MEATPLANT" scope="public">
+         <one-of>
+      
+         <!-- If the user says any of the following choices, then the grammar assigns "meat" to -->
+         <!-- the MeatOrPlant variable. -->
+         <item>
+          <one-of>
+            <item>meat</item>
+            <item>carnivore</item>
+            <item>flesh</item>
+            <item>animal</item>
+            <item>brains</item>
+          </one-of>
+          <tag>out.MeatOrPlant ="meat";</tag>
+         </item>
+       
+         <!-- If the user says any of the following choices, then the grammar assigns "plant" to -->
+         <!-- the MeatOrPlant variable. -->
+         <item>
+          <one-of>
+            <item>vegetarian</item>
+            <item>plant</item>
+            <item>veggie</item>
+            <item>hummus</item>
+          </one-of>
+          <tag>out.MeatOrPlant ="plant";</tag>
+         </item>
+      
+         </one-of>        
+        </rule>
+      </grammar>
+        
+      <noinput>
+        <prompt>
+          I did not hear anything. Please try again.
+        </prompt>
+       <reprompt/>
+      </noinput>
+
+      <nomatch>
+        <prompt>
+          I did not recognize that lifestyle choice.  Please try again.
+        </prompt>
+       <reprompt/>
+      </nomatch>
+
+    </field>
+    
+    
+    <filled>
+        <if cond="MeatOrPlant == 'meat'">
+            <goto next="#Meat"/>
+        <elseif cond="MeatOrPlant == 'plant'"/>
+            <goto next="#Plant"/>
+        </if>
+    </filled>
+  </form>
+
+  <!-- If the answer was "meat", it prompts the following statement. -->
+  <form id="Meat">
+    <field name="BackToMain">
+    <prompt>
+      PETA is coming for you, be afraid.
+      If you wish to try again, please say "Main".
+    </prompt>
+    </field>
+    <filled>
+    <!-- This will never get hit. -->
+    </filled>
+  </form>
+
+  <!-- If the answer was "plant", it prompts the following statement. -->
+  <form id="Plant">
+    <field name="BackToMain">
+    <prompt>
+      You must be a person of strong moral convictions, and weak bowel movements.
+      If you wish to try again, please say "Main".
+    </prompt>
+    </field>
+        <filled>
+        <!-- This will never get hit. -->
+        </filled>
+  </form>
+</vxml>
+
+

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version = "2.1" xmlns="http://www.w3.org/2001/vxml">
+
+  <meta name="CSEN903-CSEN904" content="met.guc.edu.eg"/>
+
+
+  <form id="MainMenu">
+	<block>
+		Welcome to the foobar system!
+	</block>
+
+
+	<field name="city">
+		<prompt>Where do you want to travel to?</prompt>
+
+		<!-- Define the grammar. -->
+   		 <grammar xml:lang="en-us" root = "myrule">
+
+    		<rule id="myrule">
+     			 <one-of>
+       				 <item>Cairo </item>
+      				 <item>London </item>
+				 <item>Paris </item>
+      			</one-of>
+      		</rule>
+    		</grammar>
+
+
+	</field>
+
+
+	<!-- another way of getting input for city    
+	<field name="city">
+		<prompt>Where do you want to travel to?</prompt>
+			<option>Cairo</option>
+			<option>London</option>
+			<option>Paris</option>
+	</field>
+	-->
+
+
+	<field name="travellers" type="number">
+
+	<prompt count="1">
+		How many are travelling to <value expr="city"/>? 
+	</prompt>
+
+	<prompt count="2">
+		Please tell me the number of people travelling.
+	</prompt>
+
+	<prompt count="3">
+		To book a flight, you must tell me the number
+		of people travelling to <value expr="city"/>.
+	</prompt>
+
+	<nomatch>
+		<prompt>Please say just a number.</prompt>
+		<reprompt/>
+	</nomatch>       
+
+	</field>
+
+	<filled namelist="travellers">
+		
+		<prompt>
+			Thanks! You've reserved <value expr="travellers"/> tickets to <value expr="city"/> 
+		</prompt>
+	</filled>
+  </form>
+</vxml>
+
+
+

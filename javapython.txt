@@ -1,0 +1,16 @@
+
+
+    function calculatePrice(destination,travellers)
+    {
+      var pr = 500;
+      if ('Cairo' == destination)
+	pr += 400;
+      else if ('London' == destination)
+	pr += 1000;
+      else if ('Paris' == destination)
+	pr+= 1100;
+      return pr*travellers;
+    }
+  
+
+calculatePrice('Cairo',2,3)
